@@ -1,9 +1,6 @@
 package tsi;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -28,7 +25,7 @@ public class Main {
 
                 int userNum = askInt("\nPlease enter your guess", 1, 100);
 
-                long start = System.currentTimeMillis(); // start counter !!!!!
+                long start = System.currentTimeMillis(); // START counter !!!!!
 
                 if (userNum < myNum) {
                     System.out.println(myNum);
@@ -36,9 +33,9 @@ public class Main {
 
                 } else if (userNum == myNum) {
 
-                    long end = System.currentTimeMillis(); // end counter !!!!!
+                    long end = System.currentTimeMillis(); // END counter !!!!!
 
-                    GameResult r = new GameResult();
+                    GameResult r = new GameResult(); // r = obj reference
                     r.name = username;
                     r.triesCount = i + 1;
                     r.gameplay = end - start;
@@ -59,6 +56,8 @@ public class Main {
             if (!userWon) System.out.print("\nYou loose");
 
         } while (askYesNo("\nDo You want to play again? (y/n)"));
+
+        users.sort(Comparator.comparing(r -> r.triesCount));
 
         for (GameResult result : users){
             System.out.printf("%s \t\t\t  %d %d\n" , result.name, result.triesCount, result.gameplay/1000);
