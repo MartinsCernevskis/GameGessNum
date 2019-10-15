@@ -36,9 +36,9 @@ public class Main {
                     long end = System.currentTimeMillis(); // END counter !!!!!
 
                     GameResult r = new GameResult(); // r = obj reference
-                    r.name = username;
-                    r.triesCount = i + 1;
-                    r.gameplay = end - start;
+                    r.setName(username);
+                    r.setTriesCount(i + 1) ;
+                    r.setGameplay(end - start);
 
                     users.add(r);
 
@@ -57,10 +57,10 @@ public class Main {
 
         } while (askYesNo("\nDo You want to play again? (y/n)"));
 
-        users.sort(Comparator.comparing(r -> r.triesCount));
+        users.sort(Comparator.comparingInt(GameResult::getTriesCount).thenComparing(GameResult::getGameplay));
 
         for (GameResult result : users){
-            System.out.printf("%s \t\t\t  %d %d\n" , result.name, result.triesCount, result.gameplay/1000);
+            System.out.printf("%s \t\t\t  %d %d\n" , result.getName(), result.getTriesCount(), result.getGameplay()/1000);
         }
         System.out.println();
         System.out.println("Goodbye");
