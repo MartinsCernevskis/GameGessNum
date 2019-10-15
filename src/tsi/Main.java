@@ -6,7 +6,7 @@ public class Main {
 
     static Random rand = new Random();
     static Scanner scan = new Scanner(System.in);
-    static ArrayList<GameResult> users = new ArrayList<>();
+    static ArrayList<GameResult> LeaderBoard = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -40,7 +40,7 @@ public class Main {
                     r.setTriesCount(i + 1) ;
                     r.setGameplay(end - start);
 
-                    users.add(r);
+                    LeaderBoard.add(r);
 
                     System.out.println("Yeah! You won!");
                     userWon = true;
@@ -57,15 +57,36 @@ public class Main {
 
         } while (askYesNo("\nDo You want to play again? (y/n)"));
 
-        users.sort(Comparator.comparingInt(GameResult::getTriesCount).thenComparing(GameResult::getGameplay));
+        showResults2();
 
-        for (GameResult result : users){
-            System.out.printf("%s \t\t\t  %d %d\n" , result.getName(), result.getTriesCount(), result.getGameplay()/1000);
-        }
+
         System.out.println();
         System.out.println("Goodbye");
     }
 
+    private static void showResults() {
+        LeaderBoard.sort(Comparator.comparingInt(GameResult::getTriesCount).thenComparing(GameResult::getGameplay));
+
+        for (GameResult result : LeaderBoard){
+            System.out.printf("%s \t\t\t  %d %d\n" ,
+                    result.getName(),
+                    result.getTriesCount(),
+                    result.getGameplay()/1000);
+        }
+    }
+
+    private static void showResults2(){
+        LeaderBoard.stream()
+                .sorted( Comparator
+                        .comparingInt(GameResult::getTriesCount)
+                        .thenComparing(GameResult::getGameplay))
+                .limit(5)
+                .forEach(r -> System.out.printf("%s \t\t\t  %d %d\n" ,
+                        r.getName(),
+                        r.getTriesCount(),
+                        r.getGameplay()/1000));
+
+    }
     static int askInt(String msg, int min, int max) {
         while (true) {
             try {
